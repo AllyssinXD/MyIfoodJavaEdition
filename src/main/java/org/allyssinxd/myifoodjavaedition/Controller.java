@@ -60,7 +60,7 @@ public class Controller implements Initializable {
     @FXML
     private TableColumn<Register, Float> columnValue;
 
-    ObservableList<Register> list = FXCollections.observableArrayList();
+    ObservableList<Register> registersLoadedList = FXCollections.observableArrayList();
 
     @FXML
     protected void OnAddBtnClicked(){
@@ -82,18 +82,22 @@ public class Controller implements Initializable {
 
         LocalTime time = LocalTime.of(hours, minutes);
 
-        String calcAverenge = time.toString();
+        String averenge = time.toString();
 
-        list.add(new Register( date, value, start.toString(), end.toString(),calcAverenge,
+        registersLoadedList.add(new Register( date, value, start.toString(), end.toString(), averenge,
                 Integer.parseInt(acceptedRunsTextbox.getText()), Integer.parseInt(deniedRunsTextbox.getText())));
 
-        tableView.setItems(list);
-        updateTotalValue();
-        updateTotalHours();
-        updateAcceptanceRate();
+        UpdateRegistersTable();
+        UpdateTotalValue();
+        UpdateTotalHours();
+        UpdateAcceptanceRate();
     }
 
-    private void updateAcceptanceRate() {
+    private void UpdateRegistersTable() {
+        tableView.setItems(registersLoadedList);
+    }
+
+    private void UpdateAcceptanceRate() {
         int accepted = 0;
         int denied = 0;
         for(Register register : tableView.getItems()){
@@ -106,31 +110,34 @@ public class Controller implements Initializable {
         else acceptanceRateTextbox.setText((100 * accepted) / total + "%");
     }
 
-    void updateTotalValue(){
+    void UpdateTotalValue(){
         float total = 0.00f;
         for(Register register : tableView.getItems()){
             total += register.getValue();
         }
-        totalValueTextbox.setText(total + "");
+        totalValueTextbox.setText(String.format("R$%.2f", total));
     }
 
-    void updateTotalHours(){
+    void UpdateTotalHours(){
         Duration accumulator = Duration.ZERO;
 
         for(Register register : tableView.getItems()){
-            LocalTime time = LocalTime.parse(register.getAverenge());
-            Duration converted = Duration.parse("PT"+time.getHour()+"H"+time.getMinute()+"M");
-            accumulator = accumulator.plusMinutes(converted.toMinutes());
+            String[] splited = register.getAverenge().split(":");
+
+            int hours = Integer.parseInt(splited[0]);
+            int minutes = Integer.parseInt(splited[1]);
+
+            accumulator = accumulator.plusMinutes(hours * 60L + minutes);
         }
 
-        //124
+        long hours = accumulator.toMinutes() / 60;
+        long minutes = accumulator.toMinutes() % 60;
 
-        LocalTime sobra = new LocalTimeStringConverter().fromString("0:"+accumulator.toMinutes() % 60);
-        totalHoursTextbox.setText(accumulator.toMinutes() / 60 + ":" + sobra.toString().split(":")[1]);
+        totalHoursTextbox.setText(String.format("%02d:%02d", hours, minutes));
     }
 
     @FXML
-    protected void saveAsJson(){
+    protected void SaveAsJson(){
         ObjectMapper mapper = new ObjectMapper();
 
         ArrayList<Register> registers = new ArrayList<>(tableView.getItems());
@@ -155,7 +162,7 @@ public class Controller implements Initializable {
         }
     }
     @FXML
-    protected void loadJson(){
+    protected void LoadJson(){
         ObjectMapper mapper = new ObjectMapper();
 
         try {
@@ -170,11 +177,12 @@ public class Controller implements Initializable {
             if(!json.isEmpty()) registers = mapper.readValue(json, new TypeReference<ArrayList<Register>>(){});
             else registers = new ArrayList<>(){};
             tableView.setItems(FXCollections.observableList(registers));
-            list = FXCollections.observableList(registers);
+            registersLoadedList = FXCollections.observableList(registers);
 
-            updateTotalHours();
-            updateTotalValue();
-            updateAcceptanceRate();
+            UpdateRegistersTable();
+            UpdateTotalHours();
+            UpdateTotalValue();
+            UpdateAcceptanceRate();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -184,11 +192,12 @@ public class Controller implements Initializable {
     protected void ChangeDropdownMenu(javafx.event.ActionEvent event){
         MenuItem menuItem = (MenuItem) event.getSource();
         dropdownMenu.setText(menuItem.getText());
-        loadJson();
+        LoadJson();
     }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        // Setup Table...
         columnDate.setCellValueFactory(new PropertyValueFactory<Register, String>("date"));
         columnStart.setCellValueFactory(new PropertyValueFactory<Register, String>("start"));
         columnEnd.setCellValueFactory(new PropertyValueFactory<Register, String>("end"));
@@ -196,11 +205,12 @@ public class Controller implements Initializable {
         columnValue.setCellValueFactory(new PropertyValueFactory<Register, Float>("value"));
         columnAccepted.setCellValueFactory(new PropertyValueFactory<Register, Integer>("acceptedRuns"));
         columnDenied.setCellValueFactory(new PropertyValueFactory<Register, Integer>("deniedRuns"));
+        UpdateRegistersTable();
 
+        // Table first load...
+        LoadJson();
+
+        // Some more configs...
         datePicker.setValue(LocalDate.now());
-
-        tableView.setItems(list);
-
-        loadJson();
     }
 }
