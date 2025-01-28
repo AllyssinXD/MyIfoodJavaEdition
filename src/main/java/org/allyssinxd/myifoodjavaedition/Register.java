@@ -1,4 +1,4 @@
-package org.example.myifoodjavaedition;
+package org.allyssinxd.myifoodjavaedition;
 
 public class Register {
     private String date;

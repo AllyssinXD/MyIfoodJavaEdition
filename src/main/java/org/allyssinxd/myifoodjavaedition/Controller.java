@@ -1,4 +1,4 @@
-package org.example.myifoodjavaedition;
+package org.allyssinxd.myifoodjavaedition;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -9,7 +9,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.util.converter.LocalDateStringConverter;
 import javafx.util.converter.LocalTimeStringConverter;
 
 import java.io.BufferedWriter;
@@ -20,13 +19,9 @@ import java.net.URL;
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.time.ZonedDateTime;
-import java.time.temporal.Temporal;
-import java.time.temporal.TemporalAmount;
-import java.time.temporal.TemporalUnit;
 import java.util.*;
 
-public class HelloController implements Initializable {
+public class Controller implements Initializable {
 
     @FXML
     private SplitMenuButton dropdownMenu;
@@ -136,7 +131,6 @@ public class HelloController implements Initializable {
 
     @FXML
     protected void saveAsJson(){
-        System.out.println("Lol");
         ObjectMapper mapper = new ObjectMapper();
 
         ArrayList<Register> registers = new ArrayList<>(tableView.getItems());
@@ -162,7 +156,6 @@ public class HelloController implements Initializable {
     }
     @FXML
     protected void loadJson(){
-        System.out.println("Lol2");
         ObjectMapper mapper = new ObjectMapper();
 
         try {

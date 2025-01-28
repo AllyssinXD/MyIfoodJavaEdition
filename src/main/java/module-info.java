@@ -4,6 +4,6 @@ module org.example.myifoodjavaedition {
     requires com.fasterxml.jackson.databind;
 
 
-    opens org.example.myifoodjavaedition to javafx.fxml;
-    exports org.example.myifoodjavaedition;
+    opens org.allyssinxd.myifoodjavaedition to javafx.fxml;
+    exports org.allyssinxd.myifoodjavaedition;
 }
