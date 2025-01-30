@@ -1,63 +1,59 @@
 package org.allyssinxd.myifoodjavaedition;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
+
 public class Register {
-    private String date;
-    private String start;
-    private String end;
-    private String averenge;
+    private LocalDate date;
+    private LocalTime start;
+    private LocalTime end;
+    private String average;
     private int acceptedRuns;
     private int deniedRuns;
     private float value;
 
     public Register(){}
-    public Register(String date, float value, String start, String end, String averenge, int accepted, int denied){
+    public Register(LocalDate date, float value, LocalTime start, LocalTime end, String average, int accepted, int denied){
         this.date = date;
         this.value = value;
         this.start = start;
         this.end = end;
-        this.averenge = averenge;
+        this.average = average;
         this.acceptedRuns = accepted;
         this.deniedRuns = denied;
     }
 
-    public float getValue() {
-        return value;
-    }
 
-    public void setValue(float value) {
-        this.value = value;
-    }
-
-    public String getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
-    public void setDate(String date) {
+    public void setDate(LocalDate date) {
         this.date = date;
     }
 
-    public String getStart() {
+    public LocalTime getStart() {
         return start;
     }
 
-    public void setStart(String start) {
+    public void setStart(LocalTime start) {
         this.start = start;
     }
 
-    public String getEnd() {
+    public LocalTime getEnd() {
         return end;
     }
 
-    public void setEnd(String end) {
+    public void setEnd(LocalTime end) {
         this.end = end;
     }
 
-    public String getAverenge() {
-        return averenge;
+    public String getAverage() {
+        return average;
     }
 
-    public void setAverenge(String averenge) {
-        this.averenge = averenge;
+    public void setAverage(String average) {
+        this.average = average;
     }
 
     public int getAcceptedRuns() {
@@ -74,5 +70,13 @@ public class Register {
 
     public void setDeniedRuns(int deniedRuns) {
         this.deniedRuns = deniedRuns;
+    }
+
+    public float getValue() {
+        return value;
+    }
+
+    public void setValue(float value) {
+        this.value = value;
     }
 }

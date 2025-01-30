@@ -21,36 +21,9 @@
             <Font name="Inter Regular" size="15.0" />
          </font>
       </Label>
-      <Label alignment="CENTER" layoutX="41.0" layoutY="378.0" prefHeight="23.0" prefWidth="149.0" text="Valor Total">
-         <font>
-            <Font name="Inter Regular" size="18.0" />
-         </font>
-      </Label>
-      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="219.0" layoutY="378.0" prefHeight="23.0" prefWidth="149.0" text="Total de Horas" textAlignment="CENTER">
-         <font>
-            <Font name="Inter Regular" size="18.0" />
-         </font>
-      </Label>
       <TextField id="endTextBox" fx:id="endTextBox" layoutX="359.0" layoutY="198.0" text="11:20" />
       <TextField id="valueTextBox" fx:id="valueTextBox" layoutX="359.0" layoutY="135.0" prefHeight="25.0" prefWidth="149.0" text="25" />
       <TextField id="totalValueTextbox" fx:id="deniedRunsTextbox" layoutX="359.0" layoutY="262.0" />
-      <TextField id="totalHoursTextbox" fx:id="totalHoursTextbox" layoutX="229.0" layoutY="418.0" prefHeight="25.0" prefWidth="129.0" />
-      <SplitMenuButton fx:id="dropdownMenu" alignment="CENTER" contentDisplay="CENTER" layoutX="237.0" layoutY="54.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="162.0" text="Janeiro">
-        <items>
-          <MenuItem fx:id="janeiro" mnemonicParsing="false" onAction="#ChangeDropdownMenu" style="-fx-padding: 5 90 5 5;" text="Janeiro" />
-          <MenuItem fx:id="fevereiro" mnemonicParsing="false" onAction="#ChangeDropdownMenu" style="-fx-padding: 5 90 5 5;" text="Fevereiro" />
-            <MenuItem fx:id="março" mnemonicParsing="false" onAction="#ChangeDropdownMenu" style="-fx-padding: 5 90 5 5;" text="Março" />
-            <MenuItem fx:id="abril" mnemonicParsing="false" onAction="#ChangeDropdownMenu" style="-fx-padding: 5 90 5 5;" text="Abril" />
-            <MenuItem fx:id="abril1" mnemonicParsing="false" onAction="#ChangeDropdownMenu" style="-fx-padding: 5 90 5 5;" text="Maio" />
-            <MenuItem fx:id="abril11" mnemonicParsing="false" onAction="#ChangeDropdownMenu" style="-fx-padding: 5 90 5 5;" text="Junho" />
-            <MenuItem fx:id="abril111" mnemonicParsing="false" onAction="#ChangeDropdownMenu" style="-fx-padding: 5 90 5 5;" text="Julho" />
-            <MenuItem fx:id="abril1111" mnemonicParsing="false" onAction="#ChangeDropdownMenu" style="-fx-padding: 5 90 5 5;" text="Agosto" />
-            <MenuItem fx:id="abril11111" mnemonicParsing="false" onAction="#ChangeDropdownMenu" style="-fx-padding: 5 90 5 5;" text="Setembro" />
-            <MenuItem fx:id="abril111111" mnemonicParsing="false" onAction="#ChangeDropdownMenu" style="-fx-padding: 5 90 5 5;" text="Outubro" />
-            <MenuItem fx:id="abril1111111" mnemonicParsing="false" onAction="#ChangeDropdownMenu" style="-fx-padding: 5 90 5 5;" text="Novembro" />
-            <MenuItem fx:id="abril11111111" mnemonicParsing="false" onAction="#ChangeDropdownMenu" style="-fx-padding: 5 90 5 5;" text="Dezembro" />
-        </items>
-      </SplitMenuButton>
       <Label layoutX="80.0" layoutY="162.0" text="Início">
          <font>
             <Font name="Inter Regular" size="15.0" />
@@ -63,23 +36,8 @@
       </Label>
       <TextField id="startTextBox" fx:id="startTextBox" layoutX="80.0" layoutY="187.0" prefHeight="25.0" prefWidth="149.0" text="9:20" />
       <DatePicker id="dateTextBox" fx:id="datePicker" layoutX="80.0" layoutY="125.0" prefHeight="25.0" prefWidth="149.0" promptText="01/01/2025" />
-      <TableView id="tableView" fx:id="tableView" layoutX="518.0" layoutY="34.0" prefHeight="309.0" prefWidth="528.0" visible="false">
-        <columns>
-          <TableColumn fx:id="columnDate" prefWidth="75.0" text="Data" />
-          <TableColumn fx:id="columnValue" prefWidth="75.0" text="Valor" />
-            <TableColumn fx:id="columnStart" prefWidth="75.0" text="Começo" />
-            <TableColumn fx:id="columnEnd" prefWidth="75.0" text="Fim" />
-            <TableColumn fx:id="columnAverenge" prefWidth="75.0" text="Media" />
-            <TableColumn fx:id="columnAccepted" prefWidth="75.0" text="Aceitas" />
-            <TableColumn fx:id="columnDenied" prefWidth="75.0" text="Recusadas" />
-        </columns>
-      </TableView>
       <Button id="addBtn" fx:id="addBtn" layoutX="80.0" layoutY="294.0" mnemonicParsing="false" onAction="#OnAddBtnClicked" prefHeight="25.0" prefWidth="119.0" text="Adicionar" />
-      <Button layoutX="68.0" layoutY="511.0" mnemonicParsing="false" onAction="#SaveAsJson" prefHeight="25.0" prefWidth="116.0" text="salvar" />
-      <Button layoutX="413.0" layoutY="511.0" mnemonicParsing="false" text="abrir banco de dados" />
       <TextField id="totalValueTextbox" fx:id="acceptedRunsTextbox" layoutX="80.0" layoutY="251.0" />
-      <TextField id="totalValueTextbox" fx:id="totalValueTextbox" layoutX="71.0" layoutY="418.0" prefHeight="25.0" prefWidth="119.0" />
-      <TextField id="totalValueTextbox" fx:id="acceptanceRateTextbox" layoutX="393.0" layoutY="418.0" />
       <Label layoutX="359.0" layoutY="239.0" text="Corridas Negadas">
          <font>
             <Font name="Inter Regular" size="15.0" />
@@ -90,10 +48,52 @@
             <Font name="Inter Regular" size="15.0" />
          </font>
       </Label>
-      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="393.0" layoutY="364.0" prefHeight="51.0" prefWidth="149.0" text="Porcentagem de Corridas Aceitas" textAlignment="CENTER" wrapText="true">
-         <font>
-            <Font name="Inter Regular" size="12.0" />
-         </font>
-      </Label>
+      <Pane layoutX="20.0" layoutY="344.0" prefHeight="222.0" prefWidth="557.0" style="-fx-background-color: rgb(200,200,200); -fx-background-radius: 10px;">
+         <children>
+            <Label layoutX="66.0" layoutY="102.0" prefHeight="23.0" prefWidth="119.0" text="Valor Total">
+               <font>
+                  <Font name="Inter Regular" size="13.0" />
+               </font>
+            </Label>
+            <Label contentDisplay="CENTER" layoutX="213.0" layoutY="102.0" prefHeight="23.0" prefWidth="140.0" text="Total de Horas" textAlignment="CENTER">
+               <font>
+                  <Font name="Inter Regular" size="13.0" />
+               </font>
+            </Label>
+            <Label contentDisplay="CENTER" layoutX="374.0" layoutY="76.0" prefHeight="51.0" prefWidth="149.0" text="Porcentagem de Corridas Aceitas" wrapText="true">
+               <font>
+                  <Font name="Inter Regular" size="12.0" />
+               </font>
+            </Label>
+            <SplitMenuButton fx:id="dropdownMenu" alignment="CENTER" contentDisplay="CENTER" layoutX="361.0" layoutY="16.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="162.0" text="Janeiro">
+              <items>
+                <MenuItem fx:id="janeiro" mnemonicParsing="false" onAction="#ChangeDropdownMenu" style="-fx-padding: 5 90 5 5;" text="Janeiro" />
+                <MenuItem fx:id="fevereiro" mnemonicParsing="false" onAction="#ChangeDropdownMenu" style="-fx-padding: 5 90 5 5;" text="Fevereiro" />
+                  <MenuItem fx:id="março" mnemonicParsing="false" onAction="#ChangeDropdownMenu" style="-fx-padding: 5 90 5 5;" text="Março" />
+                  <MenuItem fx:id="abril" mnemonicParsing="false" onAction="#ChangeDropdownMenu" style="-fx-padding: 5 90 5 5;" text="Abril" />
+                  <MenuItem fx:id="abril1" mnemonicParsing="false" onAction="#ChangeDropdownMenu" style="-fx-padding: 5 90 5 5;" text="Maio" />
+                  <MenuItem fx:id="abril11" mnemonicParsing="false" onAction="#ChangeDropdownMenu" style="-fx-padding: 5 90 5 5;" text="Junho" />
+                  <MenuItem fx:id="abril111" mnemonicParsing="false" onAction="#ChangeDropdownMenu" style="-fx-padding: 5 90 5 5;" text="Julho" />
+                  <MenuItem fx:id="abril1111" mnemonicParsing="false" onAction="#ChangeDropdownMenu" style="-fx-padding: 5 90 5 5;" text="Agosto" />
+                  <MenuItem fx:id="abril11111" mnemonicParsing="false" onAction="#ChangeDropdownMenu" style="-fx-padding: 5 90 5 5;" text="Setembro" />
+                  <MenuItem fx:id="abril111111" mnemonicParsing="false" onAction="#ChangeDropdownMenu" style="-fx-padding: 5 90 5 5;" text="Outubro" />
+                  <MenuItem fx:id="abril1111111" mnemonicParsing="false" onAction="#ChangeDropdownMenu" style="-fx-padding: 5 90 5 5;" text="Novembro" />
+                  <MenuItem fx:id="abril11111111" mnemonicParsing="false" onAction="#ChangeDropdownMenu" style="-fx-padding: 5 90 5 5;" text="Dezembro" />
+              </items>
+               <font>
+                  <Font name="Roboto Regular" size="16.0" />
+               </font>
+            </SplitMenuButton>
+            <TextField id="totalHoursTextbox" fx:id="totalHoursTextbox" layoutX="214.0" layoutY="125.0" prefHeight="25.0" prefWidth="129.0" />
+            <TextField id="totalValueTextbox" fx:id="totalValueTextbox" layoutX="66.0" layoutY="125.0" prefHeight="25.0" prefWidth="119.0" />
+            <TextField id="totalValueTextbox" fx:id="acceptanceRateTextbox" layoutX="374.0" layoutY="125.0" />
+            <Button layoutX="394.0" layoutY="183.0" mnemonicParsing="false" text="abrir banco de dados" />
+            <Label layoutX="66.0" layoutY="14.0" prefHeight="17.0" prefWidth="182.0" text="Consulta">
+               <font>
+                  <Font name="Roboto Regular" size="22.0" />
+               </font>
+            </Label>
+         </children>
+      </Pane>
    </children>
 </AnchorPane>

@@ -9,6 +9,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.util.converter.LocalDateStringConverter;
 import javafx.util.converter.LocalTimeStringConverter;
 
 import java.io.BufferedWriter;
@@ -16,6 +17,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URL;
+import java.sql.Connection;
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -43,174 +45,102 @@ public class Controller implements Initializable {
     private TextField deniedRunsTextbox;
     @FXML
     private TextField acceptanceRateTextbox;
-    @FXML
-    private TableView<Register> tableView;
-    @FXML
-    private TableColumn<Register, String> columnDate;
-    @FXML
-    private TableColumn<Register, String> columnStart;
-    @FXML
-    private TableColumn<Register, String> columnEnd;
-    @FXML
-    private TableColumn<Register, String> columnAverenge;
-    @FXML
-    private TableColumn<Register, Integer> columnAccepted;
-    @FXML
-    private TableColumn<Register, Integer> columnDenied;
-    @FXML
-    private TableColumn<Register, Float> columnValue;
 
     ObservableList<Register> registersLoadedList = FXCollections.observableArrayList();
 
     @FXML
     protected void OnAddBtnClicked(){
-        LocalTimeStringConverter converter = new LocalTimeStringConverter();
+        LocalTimeStringConverter timeConverter = new LocalTimeStringConverter();
+        LocalDateStringConverter dateConverter = new LocalDateStringConverter();
 
-        Float value = Float.parseFloat(valueTextBox.getText());
-        LocalTime start = converter.fromString(startTextBox.getText());
-        LocalTime end = converter.fromString(endTextBox.getText());
-        String date = datePicker.getValue().toString();
+        //Values from textBoxes
+        float value = Float.parseFloat(valueTextBox.getText());
+        LocalTime start = timeConverter.fromString(startTextBox.getText());
+        LocalTime end = timeConverter.fromString(endTextBox.getText());
 
+        String uncompatibleDate = datePicker.getValue().toString();
+        String[] splitedDate = uncompatibleDate.split("-");
+        LocalDate date = dateConverter.fromString(splitedDate[2]+"/"+splitedDate[1]+"/"+splitedDate[0]);
+
+        int accepted = Integer.parseInt(acceptedRunsTextbox.getText());
+        int denied = Integer.parseInt(deniedRunsTextbox.getText());
+
+        //Calc Average
         Duration duration = Duration.between(start, end);
-
         if(duration.isNegative()){
             duration = duration.plusHours(24);
         }
-
         int hours = duration.toHoursPart();
         int minutes = duration.toMinutesPart();
 
-        LocalTime time = LocalTime.of(hours, minutes);
+        String average =  LocalTime.of(hours, minutes).toString();
 
-        String averenge = time.toString();
+        RegisterDAO newRegister = new RegisterDAO(date, value, start, end, average, accepted, denied);
+        newRegister.Create();
 
-        registersLoadedList.add(new Register( date, value, start.toString(), end.toString(), averenge,
-                Integer.parseInt(acceptedRunsTextbox.getText()), Integer.parseInt(deniedRunsTextbox.getText())));
-
-        UpdateRegistersTable();
-        UpdateTotalValue();
-        UpdateTotalHours();
-        UpdateAcceptanceRate();
-    }
-
-    private void UpdateRegistersTable() {
-        tableView.setItems(registersLoadedList);
-    }
-
-    private void UpdateAcceptanceRate() {
-        int accepted = 0;
-        int denied = 0;
-        for(Register register : tableView.getItems()){
-            accepted += register.getAcceptedRuns();
-            denied += register.getDeniedRuns();
-        }
-        int total = accepted + denied;
-
-        if(total == 0) acceptanceRateTextbox.setText("N/A");
-        else acceptanceRateTextbox.setText((100 * accepted) / total + "%");
-    }
-
-    void UpdateTotalValue(){
-        float total = 0.00f;
-        for(Register register : tableView.getItems()){
-            total += register.getValue();
-        }
-        totalValueTextbox.setText(String.format("R$%.2f", total));
-    }
-
-    void UpdateTotalHours(){
-        Duration accumulator = Duration.ZERO;
-
-        for(Register register : tableView.getItems()){
-            String[] splited = register.getAverenge().split(":");
-
-            int hours = Integer.parseInt(splited[0]);
-            int minutes = Integer.parseInt(splited[1]);
-
-            accumulator = accumulator.plusMinutes(hours * 60L + minutes);
-        }
-
-        long hours = accumulator.toMinutes() / 60;
-        long minutes = accumulator.toMinutes() % 60;
-
-        totalHoursTextbox.setText(String.format("%02d:%02d", hours, minutes));
-    }
-
-    @FXML
-    protected void SaveAsJson(){
-        ObjectMapper mapper = new ObjectMapper();
-
-        ArrayList<Register> registers = new ArrayList<>(tableView.getItems());
-
-        try {
-            String value = mapper.writeValueAsString(registers);
-            File file = new File(System.getProperty("user.dir") + "/saves/" + dropdownMenu.getText() + ".json");
-
-            if(!file.exists()) {
-                boolean a = file.createNewFile();
-            }
-
-            BufferedWriter writer = new BufferedWriter(new FileWriter(System.getProperty("user.dir") + "/saves/"
-                    + dropdownMenu.getText() + ".json"));
-            writer.write(value);
-            writer.close();
-            System.out.println("Arquivo Salvo");
-        } catch (JsonProcessingException e) {
-            throw new RuntimeException(e);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-    @FXML
-    protected void LoadJson(){
-        ObjectMapper mapper = new ObjectMapper();
-
-        try {
-            File file = new File(System.getProperty("user.dir") + "/saves/" + dropdownMenu.getText() + ".json");
-
-            if(!file.exists()) {boolean a = file.createNewFile();}
-
-            String json = "";
-            Scanner scanner = new Scanner(file);
-            if(scanner.hasNextLine()) json += scanner.nextLine();
-            ArrayList<Register> registers;
-            if(!json.isEmpty()) registers = mapper.readValue(json, new TypeReference<ArrayList<Register>>(){});
-            else registers = new ArrayList<>(){};
-            tableView.setItems(FXCollections.observableList(registers));
-            registersLoadedList = FXCollections.observableList(registers);
-
-            UpdateRegistersTable();
-            UpdateTotalHours();
-            UpdateTotalValue();
-            UpdateAcceptanceRate();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        UpdateAll();
     }
 
     @FXML
     protected void ChangeDropdownMenu(javafx.event.ActionEvent event){
         MenuItem menuItem = (MenuItem) event.getSource();
         dropdownMenu.setText(menuItem.getText());
-        LoadJson();
+
+        UpdateAll();
+    }
+
+    public void UpdateAll(){
+        ArrayList<Register> registers = RegisterDAO.GetAllByMonth(dropdownMenu.getText());
+
+        float totalValue = 0.00f;
+
+        int acceptedRuns = 0;
+        int deniedRuns = 0;
+
+        for(Register register : registers){
+            totalValue += register.getValue();
+            acceptedRuns += register.getAcceptedRuns();
+            deniedRuns += register.getDeniedRuns();
+        }
+
+        int totalRuns = acceptedRuns + deniedRuns;
+        float porcent;
+        if(totalRuns != 0) porcent = (float) acceptedRuns / totalRuns * 100;
+        else porcent = 0;
+        acceptanceRateTextbox.setText("%"+String.format("%.0f", porcent));
+
+        totalValueTextbox.setText(String.format("R$%.2f", totalValue));
+        totalHoursTextbox.setText(calculateTotalTime(registers));
+    }
+
+    public String calculateTotalTime(ArrayList<Register> registers){
+        LocalTimeStringConverter timeConverter = new LocalTimeStringConverter();
+
+
+        int totalMinutes = 0;
+        for(Register register : registers){
+            LocalTime convertedTime = timeConverter.fromString(register.getAverage());
+            Duration duration = Duration.parse("PT"+convertedTime.getHour()+"H"+convertedTime.getMinute()+"M");
+            totalMinutes += (int) duration.toMinutes();
+        }
+
+        int hours = totalMinutes / 60;
+        int minutes = totalMinutes % 60;
+
+        return String.format("%02d:%02d", hours, minutes);
     }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         // Setup Table...
-        columnDate.setCellValueFactory(new PropertyValueFactory<Register, String>("date"));
-        columnStart.setCellValueFactory(new PropertyValueFactory<Register, String>("start"));
-        columnEnd.setCellValueFactory(new PropertyValueFactory<Register, String>("end"));
-        columnAverenge.setCellValueFactory(new PropertyValueFactory<Register, String>("averenge"));
-        columnValue.setCellValueFactory(new PropertyValueFactory<Register, Float>("value"));
-        columnAccepted.setCellValueFactory(new PropertyValueFactory<Register, Integer>("acceptedRuns"));
-        columnDenied.setCellValueFactory(new PropertyValueFactory<Register, Integer>("deniedRuns"));
-        UpdateRegistersTable();
 
-        // Table first load...
-        LoadJson();
+
+        //Banco de dados
+        Connection con = ConnectionFactory.CreateConnection();
 
         // Some more configs...
         datePicker.setValue(LocalDate.now());
+
+        UpdateAll();
     }
 }
