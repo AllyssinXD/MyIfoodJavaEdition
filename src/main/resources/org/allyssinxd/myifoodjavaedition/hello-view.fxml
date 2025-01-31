@@ -87,7 +87,7 @@
             <TextField id="totalHoursTextbox" fx:id="totalHoursTextbox" layoutX="214.0" layoutY="125.0" prefHeight="25.0" prefWidth="129.0" />
             <TextField id="totalValueTextbox" fx:id="totalValueTextbox" layoutX="66.0" layoutY="125.0" prefHeight="25.0" prefWidth="119.0" />
             <TextField id="totalValueTextbox" fx:id="acceptanceRateTextbox" layoutX="374.0" layoutY="125.0" />
-            <Button layoutX="394.0" layoutY="183.0" mnemonicParsing="false" text="abrir banco de dados" />
+            <Button layoutX="394.0" layoutY="183.0" mnemonicParsing="false" onAction="#OpenDatabaseView" text="abrir banco de dados" />
             <Label layoutX="66.0" layoutY="14.0" prefHeight="17.0" prefWidth="182.0" text="Consulta">
                <font>
                   <Font name="Roboto Regular" size="22.0" />

@@ -15,12 +15,6 @@ public class ConnectionFactory {
     public static Connection CreateConnection(){
         String url = "jdbc:mysql://" + host + ":" + port + "/" + database;
 
-        try {
-            Class.forName("com.mysql.jdbc.Driver");
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        }
-
         Connection connection;
 
         try {

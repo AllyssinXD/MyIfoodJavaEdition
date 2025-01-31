@@ -1,20 +1,16 @@
 package org.allyssinxd.myifoodjavaedition;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Stage;
 import javafx.util.converter.LocalDateStringConverter;
 import javafx.util.converter.LocalTimeStringConverter;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
@@ -45,11 +41,13 @@ public class Controller implements Initializable {
     private TextField deniedRunsTextbox;
     @FXML
     private TextField acceptanceRateTextbox;
+    @FXML
+    private Button addBtn;
 
     ObservableList<Register> registersLoadedList = FXCollections.observableArrayList();
 
     @FXML
-    protected void OnAddBtnClicked(){
+    protected void OnAddBtnClicked(javafx.event.ActionEvent event){
         LocalTimeStringConverter timeConverter = new LocalTimeStringConverter();
         LocalDateStringConverter dateConverter = new LocalDateStringConverter();
 
@@ -87,6 +85,11 @@ public class Controller implements Initializable {
         dropdownMenu.setText(menuItem.getText());
 
         UpdateAll();
+    }
+
+    @FXML
+    protected void OpenDatabaseView(){
+        SceneManager.openWindowByFXML("database-view.fxml");
     }
 
     public void UpdateAll(){

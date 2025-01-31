@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="437.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.allyssinxd.myifoodjavaedition.DatabaseViewController">
+   <children>
+      <SplitMenuButton fx:id="splitMenu" alignment="CENTER" contentDisplay="CENTER" layoutX="9.0" layoutY="14.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="162.0" text="Janeiro">
+         <items>
+            <MenuItem fx:id="janeiro" mnemonicParsing="false" onAction="#ChangeDropdownMenu" style="-fx-padding: 5 90 5 5;" text="Janeiro" />
+            <MenuItem fx:id="fevereiro" mnemonicParsing="false" onAction="#ChangeDropdownMenu" style="-fx-padding: 5 90 5 5;" text="Fevereiro" />
+            <MenuItem fx:id="março" mnemonicParsing="false" onAction="#ChangeDropdownMenu" style="-fx-padding: 5 90 5 5;" text="Março" />
+            <MenuItem fx:id="abril" mnemonicParsing="false" onAction="#ChangeDropdownMenu" style="-fx-padding: 5 90 5 5;" text="Abril" />
+            <MenuItem fx:id="abril1" mnemonicParsing="false" onAction="#ChangeDropdownMenu" style="-fx-padding: 5 90 5 5;" text="Maio" />
+            <MenuItem fx:id="abril11" mnemonicParsing="false" onAction="#ChangeDropdownMenu" style="-fx-padding: 5 90 5 5;" text="Junho" />
+            <MenuItem fx:id="abril111" mnemonicParsing="false" onAction="#ChangeDropdownMenu" style="-fx-padding: 5 90 5 5;" text="Julho" />
+            <MenuItem fx:id="abril1111" mnemonicParsing="false" onAction="#ChangeDropdownMenu" style="-fx-padding: 5 90 5 5;" text="Agosto" />
+            <MenuItem fx:id="abril11111" mnemonicParsing="false" onAction="#ChangeDropdownMenu" style="-fx-padding: 5 90 5 5;" text="Setembro" />
+            <MenuItem fx:id="abril111111" mnemonicParsing="false" onAction="#ChangeDropdownMenu" style="-fx-padding: 5 90 5 5;" text="Outubro" />
+            <MenuItem fx:id="abril1111111" mnemonicParsing="false" onAction="#ChangeDropdownMenu" style="-fx-padding: 5 90 5 5;" text="Novembro" />
+            <MenuItem fx:id="abril11111111" mnemonicParsing="false" onAction="#ChangeDropdownMenu" style="-fx-padding: 5 90 5 5;" text="Dezembro" />
+         </items>
+      </SplitMenuButton>
+      <TableView fx:id="tableView" layoutX="9.0" layoutY="44.0" prefHeight="379.0" prefWidth="583.0">
+        <columns>
+          <TableColumn fx:id="dateColumn" prefWidth="75.0" text="Data" />
+          <TableColumn fx:id="valueColumn" prefWidth="75.0" text="Valor" />
+            <TableColumn fx:id="startColumn" prefWidth="75.0" text="Começo" />
+            <TableColumn fx:id="endColumn" prefWidth="75.0" text="Fim" />
+            <TableColumn fx:id="averageColumn" prefWidth="75.0" text="Média" />
+            <TableColumn fx:id="acceptedColumn" prefWidth="75.0" text="Aceitas" />
+            <TableColumn fx:id="deniedColumn" prefWidth="75.0" text="Negadas" />
+        </columns>
+      </TableView>
+   </children>
+</AnchorPane>
