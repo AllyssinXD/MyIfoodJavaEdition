@@ -1,9 +1,10 @@
-package org.allyssinxd.myifoodjavaedition;
+package org.allyssinxd.myifoodjavaedition.utils;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.stage.Window;
+import org.allyssinxd.myifoodjavaedition.MainApplication;
 
 import java.io.IOException;
 

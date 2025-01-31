@@ -1,17 +1,17 @@
-package org.allyssinxd.myifoodjavaedition;
+package org.allyssinxd.myifoodjavaedition.controllers;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.stage.Stage;
 import javafx.util.converter.LocalDateStringConverter;
 import javafx.util.converter.LocalTimeStringConverter;
+import org.allyssinxd.myifoodjavaedition.utils.ConnectionFactory;
+import org.allyssinxd.myifoodjavaedition.entities.Register;
+import org.allyssinxd.myifoodjavaedition.entities.RegisterDAO;
+import org.allyssinxd.myifoodjavaedition.utils.SceneManager;
 
-import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
 import java.time.Duration;
@@ -19,7 +19,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.*;
 
-public class Controller implements Initializable {
+public class MainViewController implements Initializable {
 
     @FXML
     private SplitMenuButton dropdownMenu;

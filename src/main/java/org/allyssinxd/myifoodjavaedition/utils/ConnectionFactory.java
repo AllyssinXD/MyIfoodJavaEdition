@@ -1,4 +1,4 @@
-package org.allyssinxd.myifoodjavaedition;
+package org.allyssinxd.myifoodjavaedition.utils;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

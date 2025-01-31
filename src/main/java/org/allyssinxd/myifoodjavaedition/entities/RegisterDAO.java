@@ -1,41 +1,40 @@
-package org.allyssinxd.myifoodjavaedition;
+package org.allyssinxd.myifoodjavaedition.entities;
 
 import javafx.util.converter.LocalTimeStringConverter;
+import org.allyssinxd.myifoodjavaedition.utils.ConnectionFactory;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
-import java.util.Map;
 
 public class RegisterDAO {
 
-    private LocalDate date;
-    private float value;
-    private LocalTime start;
-    private LocalTime end;
-    private String averange;
-    private int accepted;
-    private int denied;
+    private final LocalDate date;
+    private final float value;
+    private final LocalTime start;
+    private final LocalTime end;
+    private final String average;
+    private final int accepted;
+    private final int denied;
 
-    public RegisterDAO(LocalDate date, float value, LocalTime start, LocalTime end, String averange, int accepted, int denied){
+    public RegisterDAO(LocalDate date, float value, LocalTime start, LocalTime end, String average, int accepted, int denied){
         this.date = date;
         this.value = value;
         this.start = start;
         this.end = end;
-        this.averange = averange;
+        this.average = average;
         this.accepted = accepted;
         this.denied = denied;
     }
 
     public void Create(){
         Connection con = ConnectionFactory.CreateConnection();
+        if (con == null) return;
 
         PreparedStatement ps = null;
         try {
@@ -46,7 +45,7 @@ public class RegisterDAO {
             ps.setFloat(2, value);
             ps.setString(3, start.toString());
             ps.setString(4, end.toString());
-            ps.setString(5, averange);
+            ps.setString(5, average);
             ps.setInt(6, accepted);
             ps.setInt(7, denied);
 

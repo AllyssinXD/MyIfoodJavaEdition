@@ -1,4 +1,4 @@
-package org.allyssinxd.myifoodjavaedition;
+package org.allyssinxd.myifoodjavaedition.entities;
 
 import java.time.LocalDate;
 import java.time.LocalTime;

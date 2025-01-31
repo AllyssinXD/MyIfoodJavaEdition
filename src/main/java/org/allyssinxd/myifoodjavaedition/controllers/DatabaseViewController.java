@@ -1,4 +1,4 @@
-package org.allyssinxd.myifoodjavaedition;
+package org.allyssinxd.myifoodjavaedition.controllers;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -9,11 +9,12 @@ import javafx.scene.control.SplitMenuButton;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import org.allyssinxd.myifoodjavaedition.entities.Register;
+import org.allyssinxd.myifoodjavaedition.entities.RegisterDAO;
 
 import java.net.URL;
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.List;
 import java.util.ResourceBundle;
 
 public class DatabaseViewController implements Initializable {
